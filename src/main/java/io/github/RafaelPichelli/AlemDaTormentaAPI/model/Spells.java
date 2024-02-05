@@ -1,6 +1,7 @@
 package io.github.RafaelPichelli.AlemDaTormentaAPI.model;
 
 
+import io.github.RafaelPichelli.AlemDaTormentaAPI.enums.Ranges;
 import io.github.RafaelPichelli.AlemDaTormentaAPI.enums.SpellCircle;
 import io.github.RafaelPichelli.AlemDaTormentaAPI.enums.SpellType;
 import jakarta.persistence.*;
@@ -17,6 +18,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+//@TODO: Falta fazer toda a persistencia desse modelo
 public class Spells {
 
     @Id
@@ -35,14 +37,16 @@ public class Spells {
     @Enumerated(EnumType.STRING)
     private SpellCircle circulo;
 
-    @Column
-    private String escola; //Tem que ser uma referencia para a tabela de escolas
+    @ManyToOne
+    @JoinColumn(name = "magic_school_id")
+    private MagicSchool escola;
 
     @Column
     private String execucao;
 
     @Column
-    private String alcance;
+    @Enumerated(EnumType.STRING)
+    private Ranges alcance;
 
     @Column
     private String efeito;
@@ -60,9 +64,13 @@ public class Spells {
     private String truque;
 
     @Column
-    private Integer aprimoramento; //Precisa apontar para os aprimoramentos que tiver.
+    private Integer aprimoramento;
+
+    @ManyToOne
+    @JoinColumn(name = "reference_id")
+    private Reference referencia;
 
     @Column
-    private String referencia;
+    private Integer pagina;
     
 }

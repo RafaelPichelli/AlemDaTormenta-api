@@ -16,7 +16,6 @@ import java.util.List;
 public class ArmorAndShieldsServiceImp implements ArmorAndShieldsService{
 
     private final ArmorAndShieldsRepository armorAndShieldsRepository;
-    private static final Logger logger = LoggerFactory.getLogger(ArmorAndShieldsServiceImp.class);
 
     @Override
     public List<ArmorAndShields> findByNomeAndTipoLike(String nomeiItem, ArmorAndShieldType tipo) {

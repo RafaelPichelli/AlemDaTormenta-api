@@ -7,8 +7,6 @@ import lombok.Data;
 @Data
 @Builder
 public class ArmorAndShieldsDto {
-
-
     private ArmorAndShieldType tipo;
     private String nome;
     private Integer preco;
