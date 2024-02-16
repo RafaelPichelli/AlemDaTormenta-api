@@ -14,7 +14,6 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-//@TODO: Falta fazer toda a persistencia desse modelo
 public class Reference {
 
     @Id
@@ -22,7 +21,7 @@ public class Reference {
     @Column
     private Long id;
 
-    @Column
+    @Column(unique = true)
     private String nome;
 
 }

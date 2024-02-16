@@ -7,5 +7,7 @@ import java.util.List;
 public interface ReferenceService {
     List<Reference> findByNome(String nome);
 
+    Reference findById(Integer id);
+
     Reference save (Reference reference);
 }

@@ -21,12 +21,16 @@ public class MagicSchool {
     @Column
     private Long id;
 
-    @Column
+    @Column(unique = true)
     private String nome;
 
     @Column
     private String descricao;
 
+    @ManyToOne
+    @JoinColumn(name = "reference_id", referencedColumnName = "id")
+    private Reference referencia;
+
     @Column
-    private String referencia;
+    private Integer pagina;
 }

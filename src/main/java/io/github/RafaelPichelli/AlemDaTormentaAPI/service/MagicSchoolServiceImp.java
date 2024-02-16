@@ -16,12 +16,7 @@ public class MagicSchoolServiceImp implements MagicSchoolService{
 
     @Override
     public List<MagicSchool> findByNome(String nome) {
-        return magicSchoolRepository.findByNome(nome);
-    }
-
-    @Override
-    public List<MagicSchool> findAll() {
-        return magicSchoolRepository.findAll();
+        return magicSchoolRepository.findByNomeContainingIgnoreCase(nome);
     }
 
     @Override

@@ -18,9 +18,11 @@ public class ReferenceServiceImp implements ReferenceService{
 
     @Override
     public List<Reference> findByNome(String nome) {
-        return repository.findByNome(nome);
+        return repository.findByNomeContainingIgnoreCase(nome);
     }
 
+    @Override
+    public Reference findById(Integer id){return repository.findById(id);}
     @Override
     public Reference save(Reference reference) {
         var possibleReference = findByNome(reference.getNome());

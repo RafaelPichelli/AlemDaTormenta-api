@@ -5,6 +5,7 @@ import io.github.RafaelPichelli.AlemDaTormentaAPI.exception.DuplicatedTupleExcep
 import io.github.RafaelPichelli.AlemDaTormentaAPI.mapper.ReferenceMapper;
 import io.github.RafaelPichelli.AlemDaTormentaAPI.model.Reference;
 import io.github.RafaelPichelli.AlemDaTormentaAPI.service.ReferenceService;
+import io.github.RafaelPichelli.AlemDaTormentaAPI.utils.TextFormatter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/reference")
@@ -24,6 +24,7 @@ public class ReferenceController {
     @PostMapping
     public ResponseEntity save(@RequestBody ReferenceDto dto){
         try {
+            dto.setNome(TextFormatter.formatInput(dto.getNome()));
             Reference reference = mapper.mapToReference(dto);
             service.save(reference);
             return ResponseEntity.status(HttpStatus.CREATED).build();
@@ -34,11 +35,10 @@ public class ReferenceController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ReferenceDto>> search(@RequestParam(name = "nome") String nome){
+    public ResponseEntity<List<Reference>> search(@RequestParam(name = "nome") String nome){
         var result = service.findByNome(nome);
-        var response = result.stream().map(item -> mapper.mapToDto(item)).collect(Collectors.toList());
 
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(result);
     }
 
 }

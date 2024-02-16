@@ -26,7 +26,7 @@ public class Spells {
     @Column
     private Long id;
 
-    @Column
+    @Column(unique = true)
     private String nome;
 
     @Column
@@ -38,7 +38,7 @@ public class Spells {
     private SpellCircle circulo;
 
     @ManyToOne
-    @JoinColumn(name = "magic_school_id")
+    @JoinColumn(name = "magic_school_id", referencedColumnName = "id")
     private MagicSchool escola;
 
     @Column
@@ -67,7 +67,7 @@ public class Spells {
     private Integer aprimoramento;
 
     @ManyToOne
-    @JoinColumn(name = "reference_id")
+    @JoinColumn(name = "reference_id", referencedColumnName = "id")
     private Reference referencia;
 
     @Column

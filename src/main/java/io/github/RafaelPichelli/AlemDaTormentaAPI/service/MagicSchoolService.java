@@ -7,6 +7,5 @@ import java.util.List;
 public interface MagicSchoolService {
     List<MagicSchool> findByNome(String nome);
 
-    List<MagicSchool> findAll();
     MagicSchool save (MagicSchool magicSchool);
 }

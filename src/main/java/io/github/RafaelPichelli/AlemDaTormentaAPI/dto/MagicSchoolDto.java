@@ -8,4 +8,6 @@ import lombok.Data;
 public class MagicSchoolDto {
     private String nome;
     private String descricao;
+    private Integer referencia;
+    private Integer pagina;
 }
