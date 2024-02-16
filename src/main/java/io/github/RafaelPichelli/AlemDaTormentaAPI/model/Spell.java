@@ -11,6 +11,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.util.List;
+
 @Entity
 @Table
 @EntityListeners(AuditingEntityListener.class)
@@ -19,7 +21,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @NoArgsConstructor
 @Builder
 //@TODO: Falta fazer toda a persistencia desse modelo
-public class Spells {
+public class Spell {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -64,7 +66,8 @@ public class Spells {
     private String truque;
 
     @Column
-    private Integer aprimoramento;
+    @OneToMany(mappedBy = "spell", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Enhancement> aprimoramento;
 
     @ManyToOne
     @JoinColumn(name = "reference_id", referencedColumnName = "id")

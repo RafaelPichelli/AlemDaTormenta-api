@@ -2,6 +2,7 @@ package io.github.RafaelPichelli.AlemDaTormentaAPI.controller;
 
 import io.github.RafaelPichelli.AlemDaTormentaAPI.dto.MagicSchoolDto;
 import io.github.RafaelPichelli.AlemDaTormentaAPI.exception.DuplicatedTupleException;
+import io.github.RafaelPichelli.AlemDaTormentaAPI.exception.NotFoundException;
 import io.github.RafaelPichelli.AlemDaTormentaAPI.mapper.MagicSchoolMapper;
 import io.github.RafaelPichelli.AlemDaTormentaAPI.model.MagicSchool;
 import io.github.RafaelPichelli.AlemDaTormentaAPI.model.Reference;
@@ -31,14 +32,19 @@ public class MagicSchoolController {
     @PostMapping
     public ResponseEntity save(@RequestBody MagicSchoolDto dto) {
         try {
+            Reference referencia = referenceService.findById(dto.getReferencia());
+
             dto.setNome(TextFormatter.formatInput(dto.getNome()));
             dto.setDescricao(TextFormatter.formatInput(dto.getDescricao()));
 
-            Reference referencia = referenceService.findById(dto.getReferencia());
-
             MagicSchool magicSchool = mapper.mapToMagicSchool(dto, referencia);
             magicSchoolService.save(magicSchool);
+
             return ResponseEntity.status(HttpStatus.CREATED).build();
+
+        }catch (NotFoundException e){
+            Map<String, String> jsonResultado = Map.of("error", e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(jsonResultado);
         } catch (DuplicatedTupleException e) {
             Map<String, String> jsonResultado = Map.of("error", e.getMessage());
             return ResponseEntity.status(HttpStatus.CONFLICT).body(jsonResultado);

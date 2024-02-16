@@ -1,6 +1,7 @@
 package io.github.RafaelPichelli.AlemDaTormentaAPI.service;
 
 import io.github.RafaelPichelli.AlemDaTormentaAPI.exception.DuplicatedTupleException;
+import io.github.RafaelPichelli.AlemDaTormentaAPI.exception.NotFoundException;
 import io.github.RafaelPichelli.AlemDaTormentaAPI.model.MagicSchool;
 import io.github.RafaelPichelli.AlemDaTormentaAPI.model.Reference;
 import io.github.RafaelPichelli.AlemDaTormentaAPI.repository.MagicSchoolRepository;
@@ -22,7 +23,14 @@ public class ReferenceServiceImp implements ReferenceService{
     }
 
     @Override
-    public Reference findById(Integer id){return repository.findById(id);}
+    public Reference findById(Integer id){
+        Reference reference = repository.findById(id);
+        if (reference == null){
+            throw new NotFoundException("Referencia não existe");
+        }
+        return reference;
+    }
+
     @Override
     public Reference save(Reference reference) {
         var possibleReference = findByNome(reference.getNome());
